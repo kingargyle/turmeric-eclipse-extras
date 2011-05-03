@@ -1,0 +1,16 @@
+This is a set of plugins that enhance the existing functionality of the 
+TURMERIC SOA platform.  These features may eventually make it back into
+the core, but are provided here for experimentation first.
+
+To build these plugins you need to use Maven 3.  Once you have maven 3
+installed you can build the plugin and update site:
+
+mvn clean install
+
+The update site will be available in the com.github.turmeric.eclipse.extras.repository/target/site
+directory.  You can point your eclipse installation to this directory to
+install the new software.   Once installed, you will have a XML Catalog 
+entry added to the XML preferences.  This contains the namespace and xml
+schemas to be used when files are loaded into the XML editor.
+
+

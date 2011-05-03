@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+   xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>org.ebayopensource.turmeric</groupId>
+      <artifactId>turmeric-project</artifactId>
+      <version>1.1.0.0-SNAPSHOT</version>
+   </parent>
+   <groupId>com.github.turmeric.eclipse.extras</groupId>
+   <artifactId>com.github.turmeric.eclipse-extras-parent</artifactId>
+   <version>1.0.0.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+
+   <properties>
+     <tycho-version>0.10.0</tycho-version>
+   </properties>
+
+   <modules>
+      <!-- Main Bundles -->
+      <module>com.github.turmeric.eclipse.extras.core</module>
+
+      <!-- Features and Update Sites -->
+      <module>com.github.turmeric.eclipse.extras.feature</module>
+      <module>com.github.turmeric.eclipse.extras.repository</module>
+   </modules>
+
+   <repositories>
+      <repository>
+         <id>helios</id>
+         <url>http://download.eclipse.org/releases/helios/</url>
+         <layout>p2</layout>
+      </repository>
+   </repositories>
+
+   <build>
+      <plugins>
+
+         <plugin>
+            <groupId>org.sonatype.tycho</groupId>
+            <artifactId>tycho-maven-plugin</artifactId>
+            <version>${tycho-version}</version>
+            <extensions>true</extensions>
+         </plugin>
+         <plugin>
+            <groupId>org.sonatype.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <version>${tycho-version}</version>
+            <configuration>
+               <resolver>p2</resolver>
+               <!-- <target> <artifact> <groupId>org.ebayopensource.turmeric</groupId> 
+                  <artifactId>target-platform</artifactId> <version>1.0.0-SNAPSHOT</version> 
+                  <classifier>turmeric_target</classifier> </artifact> </target> -->
+               <environments>
+                  <environment>
+                     <os>linux</os>
+                     <ws>gtk</ws>
+                     <arch>x86</arch>
+                  </environment>
+                  <environment>
+                     <os>win32</os>
+                     <ws>win32</ws>
+                     <arch>x86</arch>
+                  </environment>
+                  <environment>
+                     <os>macosx</os>
+                     <ws>cocoa</ws>
+                     <arch>x86_64</arch>
+                  </environment>
+               </environments>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.sonatype.tycho</groupId>
+            <artifactId>maven-osgi-source-plugin</artifactId>
+            <version>${tycho-version}</version>
+            <configuration>
+               <encoding>UTF-8</encoding>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>attach-source</id>
+                  <goals>
+                     <goal>plugin-source</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.sonatype.tycho</groupId>
+               <artifactId>maven-osgi-compiler-plugin</artifactId>
+               <version>${tycho-version}</version>
+               <configuration>
+                  <encoding>UTF-8</encoding>
+                  <source>1.6</source>
+                  <target>1.6</target>
+               </configuration>
+            </plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-resources-plugin</artifactId>
+               <version>2.4.1</version>
+               <configuration>
+                  <encoding>UTF-8</encoding>
+               </configuration>
+            </plugin>
+            <plugin>
+               <groupId>org.sonatype.tycho</groupId>
+               <artifactId>maven-osgi-packaging-plugin</artifactId>
+               <version>${tycho-version}</version>
+               <configuration>
+                  <archiveSite>true</archiveSite>
+               </configuration>
+            </plugin>
+         </plugins>
+
+      </pluginManagement>
+
+   </build>
+
+</project>
+
