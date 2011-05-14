@@ -1,104 +1,293 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); 
-    you may not use this file except in compliance with the License. 
-    You may obtain a copy of the License at 
-   
-       http://www.apache.org/licenses/LICENSE-2.0
-       
- -->
- <schema targetNamespace="http://www.ebayopensource.org/turmeric/common/config"
-	elementFormDefault="qualified"
-	xmlns="http://www.w3.org/2001/XMLSchema"
+<!-- Copyright (c) 2006-2010 eBay Inc. All Rights Reserved. Licensed under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the License 
+	at http://www.apache.org/licenses/LICENSE-2.0 -->
+<xsd:schema targetNamespace="http://www.ebayopensource.org/turmeric/common/config"
+	elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:tns="http://www.ebayopensource.org/turmeric/common/config">
 
-    <include schemaLocation="../common/CommonSOAConfig.xsd"/>
-    <element name="global-service-config" type="tns:GlobalServiceConfig"/>
-    
-    <complexType name="GlobalServiceConfig">
-    <sequence>
-	  	<element name="monitor-config" type="tns:MonitorConfig" minOccurs="0"/>
-     	<element name="service-config-groups" type="tns:ServiceConfigGroups" minOccurs="0"/>
-     	<element name="service-layer-config" type="tns:ServiceLayerNames" minOccurs="0" maxOccurs="1"/>	
-	</sequence>
- 	</complexType>
+	<xsd:include schemaLocation="../common/CommonSOAConfig.xsd" />
+	<xsd:element name="global-service-config" type="tns:GlobalServiceConfig" />
 
-    <!-- ServiceGroups holds the collection of all config groups (templates).  Each group is named,
-      and holds a ServiceConfig instance containing the baseline values for that group.  The name of that
-	instance is not significant. -->
-    <complexType name="ServiceConfigGroups">
-	<sequence>
-		<element name="service-group" type="tns:ServiceConfigGroup" maxOccurs="unbounded" minOccurs="0"/>
-	</sequence>
-    </complexType>
+	<xsd:complexType name="GlobalServiceConfig">
+		<xsd:sequence>
+			<xsd:element name="monitor-config" type="tns:MonitorConfig"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Allows for specifying the metrics storage provider implementation,
+						metrics data persistent interval, ability to disable/enable metrics logging
+						at a given monitoring level.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="service-config-groups" type="tns:ServiceConfigGroups"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Groups are essentially configuration templates. They hold standardized values
+						that can be inherited and refined by specific client or service configurations.
+					</xsd:documentation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Groups are designed to represent patterns or standard configuration use cases.
+						Examples would be domain-standardized data binding, pipelining, or globalization
+						profiles within specific organizations (Marketplace search, Marketplace API,
+						PayPal API, etc.).  Group files might be shaped by architecture teams and
+						maintained as standard patterns.
+					</xsd:documentation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Multiple (0 or more) can be defined in a service-config-group section. Each service-config-group
+						has a name associated with it. The service-config-group definition has a name(label
+						for the group) and includes the service-config-group type.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="service-layer-config" type="tns:ServiceLayerNames"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Defines the list of service layers in the current deployment. This
+						information is used to validate the	service.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 
-    <complexType name="ServiceConfigGroup">
-	<sequence>
-		<element name="service-config" type="tns:ServiceGroupConfig" minOccurs="0"/>
-	</sequence>
-	<attribute name="name" type="string" use="required"/>
-    </complexType>
+	<!-- ServiceGroups holds the collection of all config groups (templates). 
+		Each group is named, and holds a ServiceConfig instance containing the baseline 
+		values for that group. The name of that instance is not significant. -->
+	<xsd:complexType name="ServiceConfigGroups">
+	    <xsd:annotation>
+	    	<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+                 service-groups holds the collection of all config groups (templates). 
+				 Each group is named, and holds a ServiceConfig instance containing the baseline 
+				 values for that group. The name of that instance is not significant.	    	
+	    	</xsd:documentation>
+	    </xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="service-group" type="tns:ServiceConfigGroup"
+				maxOccurs="unbounded" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+					   Defines a reusable service configuration group.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 
-	<complexType name="ServiceGroupConfig">
-		<sequence>
-			<element name="provider-options" type="tns:ProviderOptions"
+	<xsd:complexType name="ServiceConfigGroup">
+		<xsd:sequence>
+			<xsd:element name="service-config" type="tns:ServiceGroupConfig"
+				minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Defines an instance of a service configuration.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+					A unique name for the configuration.  This must be globally
+					unique.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="ServiceGroupConfig">
+		<xsd:sequence>
+			<xsd:element name="provider-options" type="tns:ProviderOptions"
 				maxOccurs="1" minOccurs="0">
-			</element>
-    			<element name="G11N-options"
-    				type="tns:ServerG11NOptions" minOccurs="0">
-    			</element>
-			<element name="pipeline-config" type="tns:PipelineConfig"
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						These are high-level operational parameters for the service.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="G11N-options" type="tns:ServerG11NOptions"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Specifies supported global IDs, supported locales, and default encodings.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pipeline-config" type="tns:PipelineConfig"
 				maxOccurs="1" minOccurs="0">
-			</element>
-    			<element name="protocol-processor"
-    				type="tns:ProtocolProcessorConfig" minOccurs="0"
-    				maxOccurs="unbounded">
-    			</element>
-    			<element name="transport"
-    				type="tns:TransportConfig" minOccurs="0"
-    				maxOccurs="unbounded">
-    			</element>
-			<element name="data-binding-config" type="tns:DataBindingConfig"
-				minOccurs="0"/>
-			<element name="service-layer" type="token" minOccurs="0"/>
-		</sequence>
-	</complexType>
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Drives the operation of the service input/output pipelines by naming handlers within
+						the pipeline, in a defined order.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="protocol-processor" type="tns:ProtocolProcessorConfig"
+				minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Gives the class name of protocol-specific handling, for example, for SOAP operation.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="transport" type="tns:TransportConfig"
+				minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Gives the class name of transport-specific handling.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="data-binding-config" type="tns:DataBindingConfig"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+  						Names the high-level serializer/deserializer factories across the various
+  						data bindings such as XML, NV, and JSON. These are predefined and do not
+  						need to be specified.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="service-layer" type="xsd:token"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Currently NOT used.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 
-	<complexType name="ProviderOptions">
-		<sequence>
-			<element name="unsupported-operation" type="string"
-				maxOccurs="unbounded" minOccurs="0"/>
-			<element name="supported-data-bindings" type="string" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="custom-serializers" type="tns:CustomSerializerConfigList" minOccurs="0" maxOccurs="unbounded"/>
-			<element name="error-mapping-handler-class-name" type="token"
-				maxOccurs="1" minOccurs="0"/>
-			<element name="error-data-provider-class-name" type="token"
-				maxOccurs="1" minOccurs="0"/>	
-			<element name="monitoring-level" type="tns:MonitorLevelConfig" minOccurs="0"/>
-			<element name="version-check-handler" type="token" minOccurs="0"/>
-			<element name="header-mapping-options" type="tns:OptionList" minOccurs="0"/>
-			<element name="request-header-mapping-options" type="tns:OptionList" minOccurs="0"/>
-			<element name="response-header-mapping-options" type="tns:OptionList" minOccurs="0"/>
-			<element name="default-request-data-binding" type="string" minOccurs="0"/>
-			<element name="default-response-data-binding" type="string" minOccurs="0"/>
-			<element name="error-status-options" type="tns:ErrorStatusOptions" minOccurs="0"/>
-		</sequence>
-	</complexType>
-	<complexType name="ServerG11NOptions">
-		<sequence>
-			<element name="supported-global-id" type="string"
-				maxOccurs="unbounded" minOccurs="0"/>
-			<element name="supported-locale" type="string"
-				maxOccurs="unbounded" minOccurs="0"/>
-			<element name="default-encoding" type="string" minOccurs="0"/>
-		</sequence>
-	</complexType>
-			
-	<complexType name="ServiceLayerNames">
-		<sequence>
-			<element name="layer-name" type="string" maxOccurs="unbounded" minOccurs="0"/>
-		</sequence>
-	</complexType>
-	
-</schema>
+	<xsd:complexType name="ProviderOptions">
+		<xsd:sequence>
+			<xsd:element name="unsupported-operation" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						The SPF framework provides a static configuration mechanism to define one or more of
+						the service operations as unsupported. Allows a service to restrict an operation
+						defined in the interface of the service, so that it is not invocable.
+						This makes pools more manageable by allowing service deployers to specifically restrict
+						the operations from among a broadly defined set. By default none of the operations
+						are unsupported.					
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="supported-data-bindings" type="xsd:string"
+				minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+					    Allows a service to disallow certain data bindings, e.g. in case not all bindings can
+					    be tested or in case other constraints exist on the use of a particular defined binding.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="custom-serializers" type="tns:CustomSerializerConfigList"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="error-mapping-handler-class-name"
+				type="xsd:token" maxOccurs="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Allows you to override the default error mapper.  This is a java class name.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="error-data-provider-class-name" type="xsd:token"
+				maxOccurs="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						Provides the error definition.
+					</xsd:documentation>
+				</xsd:annotation>	
+			</xsd:element>
+			<xsd:element name="monitoring-level" type="tns:MonitorLevelConfig"
+				minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+							Detail with which to monitor statistics for the client use of this service.
+						</xsd:documentation>
+					</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="version-check-handler" type="xsd:token"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+					   Gives the name of a special handler which performs version checking.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="header-mapping-options" type="tns:OptionList"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+					    Clients and servers can remap transport headers to alternative header names or suppress
+					    receiving these headers by the server from the client or vice versa.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="request-header-mapping-options" type="tns:OptionList"
+				minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						   Allows for mapping or suppression of Turmeric request headers.
+						</xsd:documentation>
+					</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="response-header-mapping-options" type="tns:OptionList"
+				minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+							Allows for mapping or suppression of Turmeric response headers.
+						</xsd:documentation>
+					</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="default-request-data-binding" type="xsd:string"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+						The default data binding to use for incoming requests if the data binding is not specified.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="default-response-data-binding" type="xsd:string"
+				minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation source="https://www.ebayopensource.org/index.php/Turmeric/HomePage">
+							The default data binding to use for outgoing responses if the data binding is not specified.
+						</xsd:documentation>
+					</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="error-status-options" type="tns:ErrorStatusOptions"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+ 						This is a health check configuration. A metric can be specified to measure the health
+ 						of the service.  A threshold and a sample-size can be specified.					
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServerG11NOptions">
+		<xsd:sequence>
+			<xsd:element name="supported-global-id" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0" />
+			<xsd:element name="supported-locale" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0" />
+			<xsd:element name="default-encoding" type="xsd:string"
+				minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ServiceLayerNames">
+		<xsd:sequence>
+			<xsd:element name="layer-name" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

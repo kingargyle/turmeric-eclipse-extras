@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <xsd:schema targetNamespace="http://www.ebayopensource.org/turmeric/common/config"
-	elementFormDefault="qualified"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema targetNamespace="http://www.ebayopensource.org/turmeric/common/config"
+	elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:tns="http://www.ebayopensource.org/turmeric/common/config"
 	xmlns:scfg="http://www.ebayopensource.org/turmeric/common/config"
 	xmlns:Q1="http://www.ebayopensource.org/turmeric/common/config">
 
-   <xsd:include schemaLocation="server/ServiceConfig.xsd"/>
-   <xsd:include schemaLocation="server/SecurityPolicy.xsd"/>
-   <xsd:include schemaLocation="server/CachePolicy.xsd"/>
-   <xsd:include schemaLocation="common/GlobalRegistry.xsd"/>
-   <xsd:include schemaLocation="common/TypeMappings.xsd"/>
-   <xsd:include schemaLocation="common/ClientConfig.xsd"/>
-   <xsd:include schemaLocation="common/GlobalClientConfig.xsd"/>
-   <xsd:include schemaLocation="errorLibrary/OrganizationErrorBlocks.xsd"/>
-   <xsd:include schemaLocation="errorLibrary/ErrorBundle.xsd"/>
-   <xsd:include schemaLocation="library/LibraryType.xsd"/>
-   <xsd:include schemaLocation="library/TypeDependencies.xsd"/>
-   <xsd:include schemaLocation="library/Typeinformation.xsd"/>
-   
+	<xsd:include schemaLocation="server/ServiceConfig.xsd" />
+	<xsd:include schemaLocation="server/SecurityPolicy.xsd" />
+	<xsd:include schemaLocation="server/CachePolicy.xsd" />
+	<xsd:include schemaLocation="common/GlobalRegistry.xsd" />
+	<xsd:include schemaLocation="common/TypeMappings.xsd" />
+	<xsd:include schemaLocation="common/ClientConfig.xsd" />
+	<xsd:include schemaLocation="common/GlobalClientConfig.xsd" />
+	<xsd:include schemaLocation="errorLibrary/OrganizationErrorBlocks.xsd" />
+	<xsd:include schemaLocation="errorLibrary/ErrorBundle.xsd" />
+	<xsd:include schemaLocation="library/LibraryType.xsd" />
+	<xsd:include schemaLocation="library/TypeDependencies.xsd" />
+	<xsd:include schemaLocation="library/Typeinformation.xsd" />
+
 </xsd:schema>

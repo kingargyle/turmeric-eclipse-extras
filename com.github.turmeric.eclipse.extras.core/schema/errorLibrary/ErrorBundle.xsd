@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (c) 2006-2010 eBay Inc. All Rights Reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); 
-    you may not use this file except in compliance with the License. 
-    You may obtain a copy of the License at 
-   
-       http://www.apache.org/licenses/LICENSE-2.0
-       
- -->
- <schema xmlns="http://www.w3.org/2001/XMLSchema"
+<!-- Copyright (c) 2006-2010 eBay Inc. All Rights Reserved. Licensed under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the License 
+	at http://www.apache.org/licenses/LICENSE-2.0 -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.ebayopensource.org/turmeric/common/config"
 	xmlns:tns="http://www.ebayopensource.org/turmeric/common/config"
 	elementFormDefault="qualified">
@@ -16,7 +11,8 @@
 	<element name="ErrorBundle" type="tns:ErrorBundle"></element>
 	<complexType name="ErrorBundle">
 		<sequence>
-			<element name="errorlist" type="tns:ErrorList" maxOccurs="1" minOccurs="1" />
+			<element name="errorlist" type="tns:ErrorList" maxOccurs="1"
+				minOccurs="1" />
 		</sequence>
 		<attribute name="libraryVersion" type="string" use="required"></attribute>
 		<attribute name="organization" type="string" use="required" />
@@ -50,8 +46,9 @@
 	</simpleType>
 
 	<complexType name="ErrorList">
-		<sequence >
-			<element name="error" type="tns:Error" maxOccurs="unbounded" minOccurs="0"></element>
+		<sequence>
+			<element name="error" type="tns:Error" maxOccurs="unbounded"
+				minOccurs="0"></element>
 		</sequence>
 	</complexType>
 </schema>
